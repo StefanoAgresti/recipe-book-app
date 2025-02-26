@@ -1,0 +1,164 @@
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="space-y-6">
+  <div class="flex gap-8">
+    <div class="flex-1">
+      <div class="space-y-4">
+        <div>
+          <label for="title" class="block text-sm font-medium text-gray-700"
+            >Title</label
+          >
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            class="mt-1 block w-full rounded-md p-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-700"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="3"
+            class="mt-1 block w-full rounded-md p-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <label
+          for="recipe-image"
+          class="block text-sm font-medium text-gray-700"
+          >Recipe Image</label
+        >
+        <input
+          type="file"
+          id="recipe-image"
+          accept="image/*"
+          class="hidden"
+          (change)="onFileSelected($event)"
+          #fileInput
+        />
+        <button
+          type="button"
+          (click)="fileInput.click()"
+          class="size-52 rounded-lg border-2 border-dashed border-gray-300 hover:border-blue-500 transition-colors flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100"
+        >
+          @if (selectedImage) {
+          <img
+            [src]="selectedImage"
+            alt="Recipe Image"
+            class="size-full object-cover rounded-lg"
+          />
+          } @else {
+          <div class="size-20 mb-2 text-gray-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+          </div>
+          <p class="text-sm text-gray-500">Click to upload image</p>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div formArrayName="ingredients">
+    <label for="ingredient" class="block text-sm font-medium text-gray-700"
+      >Ingredients</label
+    >
+    <div class="space-y-2">
+      @for (ingredient of ingredients.controls; track $index) {
+      <div class="flex gap-2">
+        <input
+          id="ingredient"
+          [formControlName]="$index"
+          class="flex-1 rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        />
+        <button
+          type="button"
+          (click)="removeIngredient($index)"
+          class="text-red-500 hover:text-red-700"
+        >
+          Remove
+        </button>
+      </div>
+      }
+    </div>
+    <button
+      type="button"
+      (click)="addIngredient()"
+      class="mt-2 text-sm text-blue-500 hover:text-blue-700"
+    >
+      + Add Ingredient
+    </button>
+  </div>
+
+  <div formArrayName="instructions">
+    <label for="instruction" class="block text-sm font-medium text-gray-700"
+      >Instructions</label
+    >
+    <div class="space-y-2">
+      @for (instruction of instructions.controls; track $index) {
+      <div class="flex gap-2">
+        <textarea
+          id="instruction"
+          [formControlName]="$index"
+          rows="2"
+          class="flex-1 rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        ></textarea>
+        <button
+          type="button"
+          (click)="removeInstruction($index)"
+          class="text-red-500 hover:text-red-700"
+        >
+          Remove
+        </button>
+      </div>
+      }
+    </div>
+    <button
+      type="button"
+      (click)="addInstruction()"
+      class="mt-2 text-sm text-blue-500 hover:text-blue-700"
+    >
+      + Add Instruction
+    </button>
+  </div>
+
+  <div>
+    <label for="isPublic" class="flex items-center">
+      <input
+        id="isPublic"
+        type="checkbox"
+        formControlName="isPublic"
+        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+      />
+      <span class="ml-2 text-sm text-gray-600">Make this recipe public</span>
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    [disabled]="recipeForm.invalid"
+    class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors disabled:bg-gray-400"
+  >
+    {{ recipe() ? "Update Recipe" : "Create Recipe" }}
+  </button>
+</form>

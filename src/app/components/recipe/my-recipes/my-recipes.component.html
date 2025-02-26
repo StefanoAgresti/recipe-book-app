@@ -1,0 +1,30 @@
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-900">My Recipes</h1>
+    <button
+      (click)="onCreateRecipe()"
+      class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+    >
+      Create Recipe
+    </button>
+  </div>
+
+  @if (recipes().length >= 1) {
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (recipe of recipes(); track recipe.id) {
+    <app-recipe-card
+      [recipe]="recipe"
+      [showActions]="true"
+      (onDelete)="deleteRecipe($event)"
+      (onEdit)="navigateToEdit($event)"
+    />
+    }
+  </div>
+  } @else {
+  <div
+    class="flex items-center justify-center min-h-[200px] text-gray-600 font-bold text-lg rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8"
+  >
+    No Recipes found.
+  </div>
+  }
+</div>

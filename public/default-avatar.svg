@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <!-- Background Circle -->
+  <circle cx="20" cy="20" r="20" fill="#E5E7EB"/>
+  
+  <!-- Simplified Person Icon -->
+  <path 
+    d="M20 20.5c-3.45 0-6.25-2.8-6.25-6.25S16.55 8 20 8s6.25 2.8 6.25 6.25-2.8 6.25-6.25 6.25zm0 3.125c4.175 0 12.5 2.1 12.5 6.25V33H7.5v-3.125c0-4.15 8.325-6.25 12.5-6.25z"
+    fill="#9CA3AF"
+  />
+</svg>

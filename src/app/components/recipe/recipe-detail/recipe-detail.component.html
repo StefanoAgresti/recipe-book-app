@@ -1,0 +1,68 @@
+<div class="max-w-3xl mx-auto">
+  @if (error()) {
+  <div
+    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+  >
+    {{ error() }}
+  </div>
+  } @if (recipe()) {
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="relative h-64 w-full mb-6 rounded-lg overflow-hidden">
+      @if (recipe()?.photoURL) {
+      <img
+        [src]="recipe()?.photoURL"
+        [alt]="recipe()?.title"
+        class="w-full h-full object-cover"
+      />
+      } @else {
+      <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+        <span class="text-gray-400">No image available</span>
+      </div>
+      }
+    </div>
+
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">{{ recipe()?.title }}</h1>
+      @if (isOwner()) {
+      <div class="space-x-4">
+        <button (click)="onEdit()" class="text-blue-500 hover:text-blue-700">
+          Edit
+        </button>
+        <button (click)="onDelete()" class="text-red-500 hover:text-red-700">
+          Delete
+        </button>
+      </div>
+      }
+    </div>
+
+    <div class="space-y-6">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Description</h2>
+        <p class="text-gray-600">{{ recipe()?.description }}</p>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Ingredients</h2>
+        <ul class="list-disc list-inside space-y-1">
+          @for (ingredient of recipe()?.ingredients; track ingredient) {
+          <li class="text-gray-600">{{ ingredient }}</li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Instructions</h2>
+        <ol class="list-decimal list-inside space-y-2">
+          @for (instruction of recipe()?.instructions; track instruction) {
+          <li class="text-gray-600">{{ instruction }}</li>
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+  } @else if (!error()) {
+  <div class="flex justify-center items-center h-64">
+    <p class="text-gray-500">Loading recipe...</p>
+  </div>
+  }
+</div>
