@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [RecipeCardComponent],
   templateUrl: './my-recipes.component.html',
-  styleUrl: './my-recipes.component.css',
 })
 export class MyRecipesComponent {
   private recipeService = inject(RecipesService);

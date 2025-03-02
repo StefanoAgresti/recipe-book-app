@@ -9,7 +9,6 @@ import { Recipe } from '../../../models/recipe.model';
   standalone: true,
   imports: [],
   templateUrl: './recipe-detail.component.html',
-  styleUrl: './recipe-detail.component.css',
 })
 export class RecipeDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);

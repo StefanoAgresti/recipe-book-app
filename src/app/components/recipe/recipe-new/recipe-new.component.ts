@@ -9,7 +9,6 @@ import { Recipe } from '../../../models/recipe.model';
   standalone: true,
   imports: [RecipeFormComponent],
   templateUrl: './recipe-new.component.html',
-  styleUrl: './recipe-new.component.css',
 })
 export class RecipeNewComponent {
   router = inject(Router);

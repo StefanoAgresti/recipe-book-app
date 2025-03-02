@@ -8,7 +8,6 @@ import { AuthData, AuthService } from '../../../services/auth/auth.service';
   standalone: true,
   imports: [AuthFormComponent, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   private authService = inject(AuthService);

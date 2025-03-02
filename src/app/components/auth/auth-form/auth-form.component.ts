@@ -13,7 +13,6 @@ import {
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './auth-form.component.html',
-  styleUrl: './auth-form.component.css',
 })
 export class AuthFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);

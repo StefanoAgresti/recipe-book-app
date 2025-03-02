@@ -10,7 +10,6 @@ import { RecipesService } from '../../services/recipes/recipes.service';
   standalone: true,
   imports: [RouterLink, RecipeCardComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   auth = inject(AuthService);

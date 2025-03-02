@@ -8,7 +8,6 @@ import { Router, RouterLink } from '@angular/router';
   standalone: true,
   imports: [AuthFormComponent, RouterLink],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css',
 })
 export class SignupComponent {
   private auth = inject(AuthService);

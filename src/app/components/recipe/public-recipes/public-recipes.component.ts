@@ -8,7 +8,6 @@ import { Recipe } from '../../../models/recipe.model';
   standalone: true,
   imports: [RecipeCardComponent],
   templateUrl: './public-recipes.component.html',
-  styleUrl: './public-recipes.component.css',
 })
 export class PublicRecipesComponent implements OnInit {
   private recipeService = inject(RecipesService);

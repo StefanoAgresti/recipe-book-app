@@ -10,7 +10,6 @@ import { RecipeFormComponent } from '../recipe-form/recipe-form.component';
   standalone: true,
   imports: [RecipeFormComponent],
   templateUrl: './recipe-edit.component.html',
-  styleUrl: './recipe-edit.component.css',
 })
 export class RecipeEditComponent {
   private route = inject(ActivatedRoute);

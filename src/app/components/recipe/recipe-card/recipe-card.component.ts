@@ -7,7 +7,6 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './recipe-card.component.html',
-  styleUrl: './recipe-card.component.css',
 })
 export class RecipeCardComponent {
   recipe = input.required<Recipe>();

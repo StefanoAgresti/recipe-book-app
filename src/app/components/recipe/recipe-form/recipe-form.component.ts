@@ -15,7 +15,6 @@ import { ref, uploadBytes } from '@firebase/storage';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './recipe-form.component.html',
-  styleUrl: './recipe-form.component.css',
 })
 export class RecipeFormComponent implements OnInit {
   private fb = inject(FormBuilder);
