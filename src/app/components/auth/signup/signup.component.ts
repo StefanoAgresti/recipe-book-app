@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthFormComponent } from '../auth-form/auth-form.component';
-import { AuthData, AuthService } from '../../../services/auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { AuthData } from '../../../models/auth-data.model';
 
 @Component({
   selector: 'app-signup',
@@ -13,14 +14,14 @@ export class SignupComponent {
   private auth = inject(AuthService);
   private router = inject(Router);
 
-  error: string | null = null;
+  error = signal<string | null>(null);
 
   async onSubmit({ email, username, photoURL, password }: AuthData) {
     try {
       await this.auth.signup({ email, username, photoURL, password });
       this.router.navigate(['/']);
     } catch (error: any) {
-      this.error = error;
+      this.error.set(error);
     }
   }
 }

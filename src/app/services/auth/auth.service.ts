@@ -19,13 +19,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-
-export interface AuthData {
-  email: string;
-  username?: string;
-  photoURL?: any;
-  password: string;
-}
+import { AuthData } from '../../models/auth-data.model';
 
 @Injectable({
   providedIn: 'root',

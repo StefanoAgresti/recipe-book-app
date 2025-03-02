@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthFormComponent } from '../auth-form/auth-form.component';
 import { Router, RouterLink } from '@angular/router';
-import { AuthData, AuthService } from '../../../services/auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { AuthData } from '../../../models/auth-data.model';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  error: string | null = null;
+  error = signal<string | null>(null);
 
   async onSubmit({ email, password }: AuthData) {
     try {
@@ -21,7 +22,7 @@ export class LoginComponent {
       this.router.navigate(['/']);
     } catch (error: any) {
       console.log(error);
-      this.error = error;
+      this.error.set(error);
     }
   }
 }

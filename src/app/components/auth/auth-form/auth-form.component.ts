@@ -1,26 +1,30 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthData } from '../../../services/auth/auth.service';
 import {
-  getDownloadURL,
-  ref,
-  Storage,
-  uploadBytes,
-} from '@angular/fire/storage';
+  Component,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ImageUploadComponent } from '../../image-upload/image-upload.component';
+import { AuthData } from '../../../models/auth-data.model';
 
 @Component({
   selector: 'app-auth-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ImageUploadComponent],
   templateUrl: './auth-form.component.html',
 })
 export class AuthFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly storage: Storage = inject(Storage);
-
   submitMode = input.required<string>();
   submitted = output<AuthData>();
-  selectedFile: File | null = null;
+
+  photoURL = signal<string>('');
+  handlingImage(photoURL: string) {
+    this.photoURL.set(photoURL);
+  }
 
   authForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -31,51 +35,16 @@ export class AuthFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.submitMode() === 'Sign In') {
       this.authForm.controls.username.disable();
-      // this.authForm.controls.image.disable();
-    }
-  }
-
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-    }
-  }
-
-  async uploadImage(): Promise<string> {
-    if (!this.selectedFile) {
-      throw new Error('No file selected.');
-    }
-
-    const fileName = this.selectedFile.name;
-    const storageRef = ref(this.storage, `profile-images/${fileName}`);
-    await uploadBytes(storageRef, this.selectedFile);
-
-    // const resizedImagesRef = ref(
-    //   this.storage,
-    //   `profile-images/resized-images/${fileName}`
-    // );
-
-    try {
-      // return await getDownloadURL(resizedImagesRef);
-      return await getDownloadURL(storageRef);
-    } catch (error: any) {
-      console.error('Image not found: ', error);
-      throw new Error(error);
     }
   }
 
   async onSubmit() {
-    //  (this.submitMode() === 'Sign Up' && !this.selectedFile)
-
     if (this.authForm.invalid) return;
-
+    const { email, password } = this.authForm.value;
     try {
-      const { email, password } = this.authForm.value;
-
       if (this.submitMode() === 'Sign Up') {
         const username = this.authForm.get('username')?.value;
-        const photoURL = await this.uploadImage();
+        const photoURL = this.photoURL;
 
         this.submitted.emit({
           email,
