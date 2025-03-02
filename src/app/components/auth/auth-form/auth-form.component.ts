@@ -44,7 +44,7 @@ export class AuthFormComponent implements OnInit {
     try {
       if (this.submitMode() === 'Sign Up') {
         const username = this.authForm.get('username')?.value;
-        const photoURL = this.photoURL;
+        const photoURL = this.photoURL();
 
         this.submitted.emit({
           email,
