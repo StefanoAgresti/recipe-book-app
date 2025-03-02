@@ -1,6 +1,9 @@
 <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="space-y-4">
   @if (submitMode() == 'Sign Up') {
-  <app-image-upload (photoURL)="handlingImage($event)"></app-image-upload>
+  <app-image-upload
+    mode="Profile"
+    (photoURL)="handlingImage($event)"
+  ></app-image-upload>
 
   <div>
     <label for="username" class="block text-sm font-medium text-gray-700"

@@ -14,7 +14,7 @@ export class NavbarComponent {
   isUserMenuOpen = signal(false);
 
   toggleUserMenu() {
-    this.isUserMenuOpen.set(!this.isUserMenuOpen);
+    this.isUserMenuOpen.set(!this.isUserMenuOpen());
   }
 
   async logout() {

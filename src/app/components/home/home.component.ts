@@ -17,12 +17,6 @@ export class HomeComponent implements OnInit {
 
   featuredRecipes = signal<Recipe[]>([]);
 
-  constructor() {
-    effect(() => {
-      console.log(this.auth.currentUser());
-    });
-  }
-
   ngOnInit(): void {
     this.loadFeaturedRecipes();
   }
