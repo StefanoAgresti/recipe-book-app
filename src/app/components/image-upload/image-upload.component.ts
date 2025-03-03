@@ -1,4 +1,11 @@
-import { Component, inject, output, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { ImageUploadService } from '../../services/image-upload/image-upload.service';
 
 @Component({
@@ -7,19 +14,29 @@ import { ImageUploadService } from '../../services/image-upload/image-upload.ser
   imports: [],
   templateUrl: './image-upload.component.html',
 })
-export class ImageUploadComponent {
+export class ImageUploadComponent implements OnInit {
   private imageUploadService = inject(ImageUploadService);
 
   imagePreview = signal<string>('');
   photoURL = output<string>();
+  mode = input<'Recipe' | 'Profile'>();
+  imageUrlStart = input<string | null | undefined>();
+
+  ngOnInit(): void {
+    if (this.imageUrlStart()) {
+      this.imagePreview.set(this.imageUrlStart()!);
+    }
+  }
 
   async setImage(event: any) {
     //utilizzare type event
     const file = event.target.files[0];
+    if (!file) return;
+
     this.imagePreview.set(
       await this.imageUploadService.uploadImage(
         file,
-        `images/profile/${file.name}`
+        `images/${this.mode()}/${file.name}`
       )
     );
     this.photoURL.emit(this.imagePreview());
