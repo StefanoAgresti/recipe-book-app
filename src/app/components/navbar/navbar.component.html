@@ -28,7 +28,8 @@
         <a
           routerLink="/public-recipes"
           routerLinkActive="text-blue-600"
-          class="px-3 py-2 text-gray-600 hover:text-blue-600 transition-colors"
+          [class.text-gray-600]="!router.isActive('/public-recipes', true)"
+          class="px-3 py-2 hover:text-blue-600 transition-colors"
         >
           Discover Recipes
         </a>
@@ -36,7 +37,8 @@
           <a
             routerLink="/login"
             routerLinkActive="text-blue-600"
-            class="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+            [class.text-gray-600]="!router.isActive('/login', true)"
+            class="px-4 py-2 hover:text-gray-900 transition-colors"
           >
             Login
           </a>
@@ -53,21 +55,24 @@
           <a
             routerLink="/home"
             routerLinkActive="text-blue-600"
-            class="px-3 py-2 text-gray-600 hover:text-blue-600 transition-colors"
+            [class.text-gray-600]="!router.isActive('/home', true)"
+            class="px-3 py-2 hover:text-blue-600 transition-colors"
           >
             Home
           </a>
           <a
             routerLink="/my-recipes"
             routerLinkActive="text-blue-600"
-            class="px-3 py-2 text-gray-600 hover:text-blue-600 transition-colors"
+            [class.text-gray-600]="!router.isActive('/my-recipes', false)"
+            class="px-3 py-2 hover:text-blue-600 transition-colors"
           >
             My Recipes
           </a>
           <a
             routerLink="/public-recipes"
             routerLinkActive="text-blue-600"
-            class="px-3 py-2 text-gray-600 hover:text-blue-600 transition-colors"
+            [class.text-gray-600]="!router.isActive('/public-recipes', false)"
+            class="px-3 py-2 hover:text-blue-600 transition-colors"
           >
             Discover
           </a>

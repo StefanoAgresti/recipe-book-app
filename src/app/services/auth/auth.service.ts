@@ -49,7 +49,7 @@ export class AuthService {
       //Check username availability
       const isUsernameTaken = await this.isUsernameTaken(username!);
       if (isUsernameTaken) {
-        throw new Error('Username is already taken.');
+        throw new Error('auth/username-already-in-use');
       }
 
       //Create the user
@@ -75,8 +75,10 @@ export class AuthService {
         email: user.email,
         username: user.displayName,
       });
+
+      return user;
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   }
 

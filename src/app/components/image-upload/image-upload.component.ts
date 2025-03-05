@@ -34,7 +34,9 @@ export class ImageUploadComponent implements OnInit {
     const file = event.target.files[0];
     if (!file) return;
 
-    const path = `images/${this.mode()}/${file.name}`;
+    const fileName = `${Date.now()}_${file.name}`;
+
+    const path = `images/${this.mode()}/${fileName}`;
 
     this.imagePreview.set(
       await this.imageUploadService.uploadImage(file, path)

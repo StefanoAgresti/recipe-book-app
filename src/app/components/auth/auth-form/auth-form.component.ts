@@ -40,26 +40,24 @@ export class AuthFormComponent implements OnInit {
 
   async onSubmit() {
     if (this.authForm.invalid) return;
-    const { email, password } = this.authForm.value;
-    try {
-      if (this.submitMode() === 'Sign Up') {
-        const username = this.authForm.get('username')?.value;
-        const photoURL = this.photoURL();
 
-        this.submitted.emit({
-          email,
-          username,
-          photoURL,
-          password,
-        } as AuthData);
-      } else {
-        this.submitted.emit({
-          email,
-          password,
-        } as AuthData);
-      }
-    } catch (error) {
-      console.error('Error during signup: ', error);
+    const { email, password } = this.authForm.value;
+
+    if (this.submitMode() === 'Sign Up') {
+      const username = this.authForm.get('username')?.value;
+      const photoURL = this.photoURL();
+
+      this.submitted.emit({
+        email,
+        username,
+        photoURL,
+        password,
+      } as AuthData);
+    } else if (this.submitMode() === 'Sign In') {
+      this.submitted.emit({
+        email,
+        password,
+      } as AuthData);
     }
   }
 }
