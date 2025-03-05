@@ -4,6 +4,7 @@ import {
   ref,
   Storage,
   uploadBytes,
+  deleteObject,
 } from '@angular/fire/storage';
 
 @Injectable({
@@ -20,6 +21,15 @@ export class ImageUploadService {
     } catch (error: any) {
       console.log(error);
       throw new Error(error);
+    }
+  }
+
+  async deleteImage(path: string) {
+    const storageRef = ref(this.storage, path);
+    try {
+      await deleteObject(storageRef);
+    } catch (error) {
+      console.log(error);
     }
   }
 }

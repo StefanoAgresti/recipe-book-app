@@ -28,6 +28,7 @@ export class RecipeFormComponent implements OnInit {
 
   recipe = input<Recipe | null>();
   submitted = output<Recipe>();
+  imagePath = signal<string>('');
 
   recipeForm = this.fb.group({
     title: ['', [Validators.required]],
@@ -72,6 +73,10 @@ export class RecipeFormComponent implements OnInit {
     this.recipeForm.get('photoURL')?.setValue(photoURL);
   }
 
+  handleImagePath(imagePath: string) {
+    this.imagePath.set(imagePath);
+  }
+
   addIngredient() {
     this.ingredients.push(this.fb.control(''));
   }
@@ -97,6 +102,7 @@ export class RecipeFormComponent implements OnInit {
         userId: this.auth.currentUser()!.uid,
         createdAt: this.recipe()?.createdAt || new Date(),
         updatedAt: new Date(),
+        imagePath: this.imagePath(),
       } as Recipe;
 
       this.submitted.emit(recipe);

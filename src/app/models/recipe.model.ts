@@ -5,6 +5,7 @@ export interface Recipe {
   ingredients: string[];
   instructions: string[];
   photoURL: string;
+  imagePath: string;
   userId: string;
   isPublic: boolean;
   createdAt: Date;

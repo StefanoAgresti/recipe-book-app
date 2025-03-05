@@ -35,6 +35,7 @@
         mode="Recipe"
         [imageUrlStart]="recipeForm.get('photoURL')?.value"
         (photoURL)="handleImageUpload($event)"
+        (imagePath)="handleImagePath($event)"
       ></app-image-upload>
     </div>
   </div>

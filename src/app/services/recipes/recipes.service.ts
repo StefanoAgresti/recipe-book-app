@@ -12,13 +12,14 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Recipe } from '../../models/recipe.model';
+import { ImageUploadService } from '../image-upload/image-upload.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipesService {
   firestore = inject(Firestore);
-
+  imageUploadService = inject(ImageUploadService);
   recipesRef = collection(this.firestore, 'recipes');
 
   async createRecipe(recipe: Recipe) {
@@ -33,9 +34,22 @@ export class RecipesService {
   }
 
   async deleteRecipe(id: string) {
+    // Get the recipe document
     const recipeRef = doc(this.firestore, `recipes/${id}`);
+    const recipeSnap = await getDoc(recipeRef);
+    const recipeData = recipeSnap.data();
 
-    return deleteDoc(recipeRef);
+    try {
+      //if an image for the recipe exists, delete it
+      if (recipeData && recipeData['imagePath']) {
+        const image = recipeData['imagePath'];
+        await this.imageUploadService.deleteImage(image);
+      }
+      // Delete the recipe document
+      return await deleteDoc(recipeRef);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getUserRecipes(userId: string) {
