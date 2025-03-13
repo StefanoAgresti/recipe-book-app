@@ -1,0 +1,80 @@
+<div class="pb-5">
+  <h3 class="text-lg font-medium text-gray-900 mb-4">Change Email</h3>
+
+  @if (error()) {
+  <div
+    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+  >
+    {{ error() }}
+  </div>
+  }
+
+  <form [formGroup]="updateEmailForm" class="space-y-4">
+    <div>
+      <label for="current-email" class="block text-sm font-medium text-gray-700"
+        >Current Email</label
+      >
+      <input
+        type="email"
+        id="current-email"
+        [value]="auth.currentUser()?.email || ''"
+        class="mt-1 block w-full px-3 py-2 border border-gray-200 bg-gray-50 rounded-md shadow-sm sm:text-sm"
+        readonly
+      />
+    </div>
+    <div>
+      <label for="new-email" class="block text-sm font-medium text-gray-700"
+        >New Email</label
+      >
+      <input
+        type="email"
+        id="new-email"
+        formControlName="newEmail"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+      @if (updateEmailForm.get('newEmail')?.invalid &&
+      updateEmailForm.get('newEmail')?.touched) {
+      <p class="mt-1 text-sm text-red-600">
+        Please enter a valid email address
+      </p>
+      }
+    </div>
+
+    @if (needsReauth()) {
+    <div>
+      <label for="password" class="block text-sm font-medium text-gray-700">
+        Password
+      </label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+      @if (updateEmailForm.get('password')?.invalid &&
+      updateEmailForm.get('password')?.touched) {
+      <p class="mt-1 text-sm text-red-600">
+        Password must be at least 6 characters
+      </p>
+      }
+    </div>
+    }
+
+    <p class="mt-1 text-xs text-gray-500">
+      A confirmation email will be sent to verify the change.
+    </p>
+
+    <div class="flex justify-end">
+      <button
+        type="button"
+        (click)="onUpdateEmail()"
+        [disabled]="updateEmailForm.invalid || isLoading()"
+        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300"
+      >
+        @if (isLoading()) {
+        <span class="inline-block animate-spin mr-2">&#8635;</span>
+        Updating... } @else { Update Email }
+      </button>
+    </div>
+  </form>
+</div>

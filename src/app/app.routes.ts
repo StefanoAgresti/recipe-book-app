@@ -13,6 +13,8 @@ import {
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
 import { RecipeNewComponent } from './components/recipe/recipe-new/recipe-new.component';
+import { ProfileInfoComponent } from './components/profile/profile-info/profile-info.component';
+import { ProfileFormComponent } from './components/profile/profile-form/profile-form.component';
 
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -53,6 +55,16 @@ export const routes: Routes = [
   {
     path: 'recipe/:id/edit',
     component: RecipeEditComponent,
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
+  {
+    path: 'profile/:id',
+    component: ProfileInfoComponent,
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
+  {
+    path: 'profile/:id/edit',
+    component: ProfileFormComponent,
     ...canActivate(redirectUnauthorizedToLogin),
   },
 ];

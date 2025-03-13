@@ -6,8 +6,13 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  updatePassword,
   user,
   User,
+  verifyBeforeUpdateEmail,
+  AuthCredential,
+  reauthenticateWithCredential,
+  deleteUser,
 } from '@angular/fire/auth';
 import {
   collection,
@@ -17,6 +22,7 @@ import {
   query,
   setDoc,
   where,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AuthData } from '../../models/auth-data.model';
@@ -82,8 +88,41 @@ export class AuthService {
     }
   }
 
-  login({ email, password }: AuthData) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  async login({ email, password }: AuthData) {
+    return await signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  async reauthenticateUser(credential: AuthCredential) {
+    const user = this.currentUser();
+    if (!user) throw new Error('User not authenticated.');
+
+    return await reauthenticateWithCredential(user, credential);
+  }
+
+  async updateUsername(username: string) {
+    await updateProfile(this.currentUser()!, { displayName: username });
+
+    // Update user document in firestore
+    const userRef = doc(this.firestore, `users/${this.currentUser()!.uid}`);
+    await updateDoc(userRef, {
+      username: username,
+    });
+  }
+
+  async updatePhotoURL(photoURL: string) {
+    await updateProfile(this.currentUser()!, { photoURL });
+  }
+
+  async updateEmail(newEmail: string) {
+    await verifyBeforeUpdateEmail(this.currentUser()!, newEmail);
+  }
+
+  async updatePassword(newPassword: string) {
+    await updatePassword(this.currentUser()!, newPassword);
+  }
+
+  async deleteUser(user: User) {
+    await deleteUser(user);
   }
 
   async logout() {

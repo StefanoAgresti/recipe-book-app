@@ -1,0 +1,70 @@
+<div>
+  @if (!showPasswordField()) {
+  <button
+    type="button"
+    (click)="showPasswordField.set(true)"
+    class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+  >
+    Delete Account
+  </button>
+  } @else {
+  <form
+    [formGroup]="deleteForm"
+    (ngSubmit)="onDeleteAccount()"
+    class="space-y-4"
+  >
+    @if (error()) {
+    <div class="rounded-md bg-red-50 p-4">
+      <div class="flex">
+        <div class="ml-3">
+          <p class="text-sm font-medium text-red-800">{{ error() }}</p>
+        </div>
+      </div>
+    </div>
+    }
+
+    <div>
+      <label for="password" class="block text-sm font-medium text-gray-700"
+        >Enter your password to confirm</label
+      >
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 bg-gray-50 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"
+        [class.border-red-300]="
+          deleteForm.get('password')?.invalid &&
+          deleteForm.get('password')?.touched
+        "
+      />
+      @if (deleteForm.get('password')?.invalid &&
+      deleteForm.get('password')?.touched) {
+      <p class="mt-1 text-sm text-red-600">
+        Password must be at least 6 characters
+      </p>
+      }
+    </div>
+
+    <div class="flex justify-end space-x-3">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="deleteForm.invalid || isLoading()"
+        class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50"
+      >
+        @if (isLoading()) {
+        <span>Deleting...</span>
+        } @else {
+        <span>Confirm Delete</span>
+        }
+      </button>
+    </div>
+  </form>
+  }
+</div>

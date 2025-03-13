@@ -118,6 +118,11 @@
               class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1"
             >
               <a
+                routerLink="/profile/{{ auth.currentUser()?.uid }}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                >Profile</a
+              >
+              <a
                 (click)="logout()"
                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
               >
